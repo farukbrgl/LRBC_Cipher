@@ -8,62 +8,67 @@ https://link.springer.com/article/10.1007%2Fs12652-020-01694-9
 adresinden ulaşabilirsiniz.
 """
 
-# random for generating plaintext and keys for starting
-# permutations for generating all keys
-import random
 from itertools import permutations
-import numpy
+from random import randint
 
-# random 16-bit plaintext created
-plaintext = []
-for i in range(0, 16):
-    n = random.randint(0, 1)
-    plaintext.append(n)
 
-# print(plaintext)
+def lrbc():
 
-# plaintext divided into 4 pieces pt1, pt2, pt3, p4
-# Fig. 3 at the paper
-# pt1 = plaintext[0:2] + plaintext[8:10]
-# pt2 = plaintext[2:4] + plaintext[10:12]
-# pt3 = plaintext[4:6] + plaintext[12:14]
-# pt4 = plaintext[6:8] + plaintext[14:16]
-pt1 = (str(random.randint(0, 16)))
-pt2 = (str(random.randint(0, 16)))
-pt3 = (str(random.randint(0, 16)))
-pt4 = (str(random.randint(0, 16)))
+  # random for generating plaintext and keys for starting
+  # permutations for generating all key permutations
 
-# keys generated
-# k1, k2, k3, k4 4 bit keys
-# key_list 24 permutaiton of k1, k2, k3, k4
-# every round uses key_list[i]
-k1 = [str(random.randint(0, 16))]
-k2 = [str(random.randint(0, 16))]
-k3 = [str(random.randint(0, 16))]
-k4 = [str(random.randint(0, 16))]
-perm = list(permutations(k1 + k2 + k3 + k4))
-print(perm)
-print(k1, k2, k3, k4)
+  # random 16-bit plaintext created
+  # plaintext = []
+  # for i in range(0, 16):
+  #   n = random.randint(0, 1)
+  #   plaintext.append(n)
 
-key_list = []
-key_list_abcd = []
-for k in range(24):
+  # print(plaintext)
+
+  # plaintext divided into 4 pieces pt1, pt2, pt3, p4
+  # Fig. 3 at the paper
+  # pt1 = plaintext[0:2] + plaintext[8:10]
+  # pt2 = plaintext[2:4] + plaintext[10:12]
+  # pt3 = plaintext[4:6] + plaintext[12:14]
+  # pt4 = plaintext[6:8] + plaintext[14:16]
+
+  # produce random plaintexts
+  pt1 = (str(randint(0, 15)))
+  pt2 = (str(randint(0, 15)))
+  pt3 = (str(randint(0, 15)))
+  pt4 = (str(randint(0, 15)))
+
+  # keys generated randomly
+  # k1, k2, k3, k4 4 bit keys
+  # key_list 24 permutaiton of k1, k2, k3, k4
+  # every round uses key_list[i]
+  k1 = [str(randint(0, 15))]
+  k2 = [str(randint(0, 15))]
+  k3 = [str(randint(0, 15))]
+  k4 = [str(randint(0, 15))]
+  perm = list(permutations(k1 + k2 + k3 + k4))
+  # print(perm)
+  # print(k1, k2, k3, k4)
+
+  key_list = []
+  key_list_abcd = []
+  for k in range(24):
     key_list_abcd = []
     for i in range(4):
-        a = str(k1)
-        b = str(k2)
-        c = str(k3)
-        d = str(k4)
-        print(type(perm[0]))
-        key1 = (((int((perm)[k][i]))))
-        key_list_abcd.append(key1)
-        print(key_list_abcd)
+      a = str(k1)
+      b = str(k2)
+      c = str(k3)
+      d = str(k4)
+      # print(type(perm[0]))
+      key1 = (((int((perm)[k][i]))))
+      key_list_abcd.append(key1)
+      # print(key_list_abcd)
     key_list.append(key_list_abcd)
-# print(k1)
-# print(key_list_abcd)
+  # print(k1)
+  # print(key_list)
+  # print(pt1, pt2, pt3, pt4)
 
-
-def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
+  def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
     ic1 = 0xf - (int(pt1) ^ key_a)
     ic2 = int(pt2) ^ key_b
     ic3 = int(pt3) ^ key_c
@@ -115,14 +120,16 @@ def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
 
     return pt1, pt2, pt3, pt4
 
-
-pt_1 = ""
-pt_2 = ""
-pt_3 = ""
-pt_4 = ""
-for i in range(24):
+  pt_1 = ""
+  pt_2 = ""
+  pt_3 = ""
+  pt_4 = ""
+  for i in range(24):
     pt_1, pt_2, pt_3, pt_4 = lrbc_round(
         key_list[i][0], key_list[i][1], key_list[i][2], key_list[i][3], pt1, pt2, pt3, pt4)
 
-ct = pt_1 + pt_2 + pt_3 + pt_4
-print(ct)
+  ct = pt_1 + pt_2 + pt_3 + pt_4
+  print(ct)
+
+
+lrbc()
