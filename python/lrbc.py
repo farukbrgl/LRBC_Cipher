@@ -28,40 +28,41 @@ for i in range(0, 16):
 # pt2 = plaintext[2:4] + plaintext[10:12]
 # pt3 = plaintext[4:6] + plaintext[12:14]
 # pt4 = plaintext[6:8] + plaintext[14:16]
-pt1 = (str(random.randint(0, 8)))
-pt2 = (str(random.randint(0, 8)))
-pt3 = (str(random.randint(0, 8)))
-pt4 = (str(random.randint(0, 8)))
+pt1 = (str(random.randint(0, 16)))
+pt2 = (str(random.randint(0, 16)))
+pt3 = (str(random.randint(0, 16)))
+pt4 = (str(random.randint(0, 16)))
 
-# pt1_temp = [int(l) for l in pt1]
-# pt1 = bin(int("".join(map(str, pt1_temp))))
-# print((pt1))
 # keys generated
 # k1, k2, k3, k4 4 bit keys
 # key_list 24 permutaiton of k1, k2, k3, k4
 # every round uses key_list[i]
-k1 = str(random.randint(0, 8))
-k2 = str(random.randint(0, 8))
-k3 = str(random.randint(0, 8))
-k4 = str(random.randint(0, 8))
-b = list(permutations(k1 + k2 + k3 + k4))
+k1 = [str(random.randint(0, 16))]
+k2 = [str(random.randint(0, 16))]
+k3 = [str(random.randint(0, 16))]
+k4 = [str(random.randint(0, 16))]
+perm = list(permutations(k1 + k2 + k3 + k4))
+print(perm)
+print(k1, k2, k3, k4)
+
 key_list = []
 key_list_abcd = []
 for k in range(24):
     key_list_abcd = []
     for i in range(4):
-        key1 = (((int((b)[k][i]))))
-        # print(key1)
-        # print(type(key1))
+        a = str(k1)
+        b = str(k2)
+        c = str(k3)
+        d = str(k4)
+        print(type(perm[0]))
+        key1 = (((int((perm)[k][i]))))
         key_list_abcd.append(key1)
+        print(key_list_abcd)
     key_list.append(key_list_abcd)
-# print(key_list)
-# print((((  (int(key_list[1][1]))  )   ^(int(key_list[2][2])))))
-# print(((int(key_list[1][1]))))
+# print(k1)
+# print(key_list_abcd)
 
-# round function of lrbc
 
-# print(bin(int(pt1)))
 def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
     ic1 = 0xf - (int(pt1) ^ key_a)
     ic2 = int(pt2) ^ key_b
@@ -82,7 +83,6 @@ def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
 
     # lbox of F-function
     t1 = format((int(p1[0:1]) ^ int(p2[3:4])), "01b")
-    print(t1)
     x1 = format(1 - (int(p1[0:1]) ^ 0), "01b")
 
     t2 = format(1 - (int(p1[1:2]) ^ int(p2[2:3])), "01b")
@@ -108,24 +108,21 @@ def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
 
     l1 = t1 + x4 + t2 + x3 + t3 + x2 + t4 + x1
     l2 = t5 + x8 + t6 + x7 + t7 + x6 + t8 + x5
-    # print (type(x3))
-    # print(l1)
-    # print(l2)
     pt1 = l1[4:8]
     pt2 = l2[4:8]
     pt3 = l1[0:4]
     pt4 = l2[0:4]
-    print(pt1)
-    return l1, l2, pt1, pt2, pt3, pt4
+
+    return pt1, pt2, pt3, pt4
 
 
-# lrbc_round(key_list[0][0], key_list[0][1], key_list[0][2], key_list[0][3], pt1, pt2, pt3, pt4)
 pt_1 = ""
 pt_2 = ""
 pt_3 = ""
 pt_4 = ""
 for i in range(24):
-    l1, l2, pt_1, pt_2, pt_3, pt_4 = lrbc_round(key_list[i][0], key_list[i][1], key_list[i][2], key_list[i][3], pt1, pt2, pt3, pt4)
+    pt_1, pt_2, pt_3, pt_4 = lrbc_round(
+        key_list[i][0], key_list[i][1], key_list[i][2], key_list[i][3], pt1, pt2, pt3, pt4)
 
 ct = pt_1 + pt_2 + pt_3 + pt_4
 print(ct)
