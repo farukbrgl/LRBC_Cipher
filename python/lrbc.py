@@ -28,10 +28,10 @@ for i in range(0, 16):
 # pt2 = plaintext[2:4] + plaintext[10:12]
 # pt3 = plaintext[4:6] + plaintext[12:14]
 # pt4 = plaintext[6:8] + plaintext[14:16]
-pt1 = int(str(random.randint(0, 8)))
-pt2 = int(str(random.randint(0, 8)))
-pt3 = int(str(random.randint(0, 8)))
-pt4 = int(str(random.randint(0, 8)))
+pt1 = (str(random.randint(0, 8)))
+pt2 = (str(random.randint(0, 8)))
+pt3 = (str(random.randint(0, 8)))
+pt4 = (str(random.randint(0, 8)))
 
 # pt1_temp = [int(l) for l in pt1]
 # pt1 = bin(int("".join(map(str, pt1_temp))))
@@ -61,7 +61,7 @@ for k in range(24):
 
 # round function of lrbc
 
-
+# print(bin(int(pt1)))
 def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
     ic1 = 0xf - (int(pt1) ^ key_a)
     ic2 = int(pt2) ^ key_b
@@ -81,9 +81,9 @@ def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
     p4 = is3[2:3] + is4[1:2] + is3[3:4] + is4[0:1]
 
     # lbox of F-function
-    t1 = format(bin(int(p1[0:1]) ^ int(p2[3:4])))
+    t1 = format((int(p1[0:1]) ^ int(p2[3:4])), "01b")
     print(t1)
-    x1 = format(0xf - (int(p1[0:1]) ^ 0), "04b")
+    x1 = format(1 - (int(p1[0:1]) ^ 0), "01b")
 
     t2 = format(1 - (int(p1[1:2]) ^ int(p2[2:3])), "01b")
     x2 = format(int(p1[1:2]) ^ 1, "01b")
@@ -108,20 +108,24 @@ def lrbc_round(key_a, key_b, key_c, key_d, pt1, pt2, pt3, pt4):
 
     l1 = t1 + x4 + t2 + x3 + t3 + x2 + t4 + x1
     l2 = t5 + x8 + t6 + x7 + t7 + x6 + t8 + x5
-    # print (type(l2))
-    return l1, l2
-
-
-lrbc_round(key_list[0][0], key_list[0][1], key_list[0]
-           [2], key_list[0][3], pt1, pt2, pt3, pt4)
-for i in range(24):
-    l1, l2 = lrbc_round(key_list[i][0], key_list[i][1],
-                        key_list[i][2], key_list[i][3], pt1, pt2, pt3, pt4)
+    # print (type(x3))
+    # print(l1)
+    # print(l2)
     pt1 = l1[4:8]
     pt2 = l2[4:8]
     pt3 = l1[0:4]
     pt4 = l2[0:4]
-    # print (i,key_list[i][0])
-    # print (pt2)
-    # print (pt3)
-    # print (pt4)
+    print(pt1)
+    return l1, l2, pt1, pt2, pt3, pt4
+
+
+# lrbc_round(key_list[0][0], key_list[0][1], key_list[0][2], key_list[0][3], pt1, pt2, pt3, pt4)
+pt_1 = ""
+pt_2 = ""
+pt_3 = ""
+pt_4 = ""
+for i in range(24):
+    l1, l2, pt_1, pt_2, pt_3, pt_4 = lrbc_round(key_list[i][0], key_list[i][1], key_list[i][2], key_list[i][3], pt1, pt2, pt3, pt4)
+
+ct = pt_1 + pt_2 + pt_3 + pt_4
+print(ct)
