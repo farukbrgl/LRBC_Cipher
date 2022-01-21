@@ -138,4 +138,5 @@ for k in range(24):
 # print(pt1, pt2, pt3, pt4)
 
 
-lrbc(plaintext, key_list)
+a = lrbc(plaintext, key_list)
+print(a)
