@@ -60,12 +60,25 @@ for k in range(24):
 # print(k1)
 # print(key_list)
 # print(pt1, pt2, pt3, pt4)
+
+f = open("random_numbers_lrbc.txt", "w")
+
 plaintext1 = plaintext
-ct = lrbc(plaintext1, key_list)
-print(ct)
-ct = int(ct)
-ct = list(ct)
-print(ct)
-for i in range(100):
-    ct = lrbc(ct, key_list)
-    ct = list(ct)
+ct_0 = lrbc(plaintext1, key_list)
+f.write(ct_0 + "\n")
+print(ct_0, "zero")
+# ct = int(ct)
+# print(type(ct))
+ct = [int(x) for x in ct_0]
+print(ct, "one")
+
+for i in range(2):
+    print(ct, "inin")
+    ct = lrbc(plaintext=ct, key_list=key_list)
+    print(ct, "in")
+    f.write(ct + "\n")
+    ct = [int(x) for x in ct]
+    print(ct, "ctct")
+print(plaintext1, "final_pt")
+print(ct, "final_ct")
+f.close()
