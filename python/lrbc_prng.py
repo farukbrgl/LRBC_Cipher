@@ -5,11 +5,31 @@ import lrbc_key
 import lrbc_plaintext
 
 
+k1 = [str(randint(0, 15))]
+k2 = [str(randint(0, 15))]
+k3 = [str(randint(0, 15))]
+k4 = [str(randint(0, 15))]
+perm = list(permutations(k1 + k2 + k3 + k4))
+# print(perm)
 
+key_list = []
+key_list_abcd = []
+for k in range(24):
+    key_list_abcd = []
+    for i in range(4):
+        a = str(k1)
+        b = str(k2)
+        c = str(k3)
+        d = str(k4)
+        # print(type(perm[0]))
+        key1 = (((int((perm)[k][i]))))
+        key_list_abcd.append(key1)
+        # print(key_list_abcd)
+    key_list.append(key_list_abcd)
 
 
 f = open("random_numbers_lrbc.txt", "w")
-
+plaintext = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
 plaintext1 = plaintext
 ct_0 = lrbc(plaintext1, key_list)
 f.write(ct_0 + "\n")
@@ -19,7 +39,7 @@ print(ct_0, "zero")
 ct = [int(x) for x in ct_0]
 print(ct, "one")
 
-for i in range(2):
+for i in range(20):
     print(ct, "inin")
     ciphertext = lrbc(plaintext=ct, key_list=key_list)
     print(ciphertext, "in")

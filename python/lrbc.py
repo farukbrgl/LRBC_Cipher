@@ -19,22 +19,22 @@ def lrbc(plaintext, key_list):
         ic2 = int(pt2) ^ key_b
         ic3 = int(pt3) ^ key_c
         ic4 = 0xf - (int(pt4) ^ key_d)
-        print(ic1, ic2, ic3, ic4, "ic")
-        print(key_a, key_b, key_c, key_d, "keys")
+        # print(ic1, ic2, ic3, ic4, "ic")
+        # print(key_a, key_b, key_c, key_d, "keys")
 
         # sbox of F-function
         is1 = format(0xf - (ic1 ^ ic3), "04b")
         is2 = format((ic1 ^ 1), "04b")
         is3 = format(0xf - (ic2 ^ ic4), "04b")
         is4 = format(ic2 ^ 1, "04b")
-        print(is1, is2, is3, is4, "is")
+        # print(is1, is2, is3, is4, "is")
 
         # pbox of F-function
         p1 = is1[0:1] + is2[3:4] + is1[1:2] + is2[2:3]
         p2 = is1[2:3] + is2[1:2] + is1[3:4] + is2[0:1]
         p3 = is3[0:1] + is4[3:4] + is3[1:2] + is4[2:3]
         p4 = is3[2:3] + is4[1:2] + is3[3:4] + is4[0:1]
-        print(p1, p2, p3, p4, "p")
+        # print(p1, p2, p3, p4, "p")
 
         # lbox of F-function
         t1 = format((int(p1[0:1]) ^ int(p2[3:4])), "01b")
@@ -67,20 +67,20 @@ def lrbc(plaintext, key_list):
         pt2 = l2[4:8]
         pt3 = l1[0:4]
         pt4 = l2[0:4]
-        print(pt1, pt2, pt3, pt4, "pt")
+        # print(pt1, pt2, pt3, pt4, "pt")
 
         return pt1, pt2, pt3, pt4
 
-    pt_1 = ""
-    pt_2 = ""
-    pt_3 = ""
-    pt_4 = ""
+    # pt_1 = ""
+    # pt_2 = ""
+    # pt_3 = ""
+    # pt_4 = ""
     for i in range(24):
         pt_1, pt_2, pt_3, pt_4 = lrbc_round(
             key_list[i][0], key_list[i][1], key_list[i][2], key_list[i][3], pt1, pt2, pt3, pt4)
 
     ct = pt_1 + pt_2 + pt_3 + pt_4
-    print(ct, "inside")
+    # print(ct, "inside")
     return ct
 
 
@@ -143,4 +143,5 @@ for k in range(24):
 # print(pt1, pt2, pt3, pt4)
 
 a = lrbc(plaintext, key_list)
-print(a, "ada")
+print(a, "final")
+print(type(a))
