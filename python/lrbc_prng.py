@@ -29,7 +29,7 @@ for k in range(24):
 
 
 f = open("random_numbers_lrbc.txt", "w")
-plaintext = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+plaintext = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 plaintext1 = plaintext
 ct_0 = lrbc(plaintext1, key_list)
 f.write(ct_0 + "\n")
@@ -39,13 +39,13 @@ print(ct_0, "zero")
 ct = [int(x) for x in ct_0]
 print(ct, "one")
 
-for i in range(20):
+for i in range(100):
     print(ct, "inin")
     ciphertext = lrbc(plaintext=ct, key_list=key_list)
     print(ciphertext, "in")
     f.write(ciphertext + "\n")
     ct = [int(x) for x in ciphertext]
-    print(ciphertext, "ctct")
+    print(ciphertext, "ctct", i)
 print(plaintext1, "final_pt")
 print(ct, "final_ct")
 f.close()
