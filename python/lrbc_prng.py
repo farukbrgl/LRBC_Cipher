@@ -1,3 +1,5 @@
+# execution time : 18.869 s
+
 from lrbc import lrbc
 from itertools import permutations
 from random import randint
@@ -39,7 +41,7 @@ print(ct_0, "zero")
 ct = [int(x) for x in ct_0]
 print(ct, "one")
 
-for i in range(100):
+for i in range(99999):
     print(ct, "inin")
     ciphertext = lrbc(plaintext=ct, key_list=key_list)
     print(ciphertext, "in")
